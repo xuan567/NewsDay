@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="view"
+            type="com.example.newsday.home.view.HomeFragmentAttention" />
+
+        <variable
+            name="model"
+            type="com.example.newsday.home.viewmodel.AttentionViewModel" />
+    </data>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".home.view.HomeFragmentAttention">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- TODO: Update blank fragment layout -->
+
+            <ImageView
+                android:id="@+id/attention_picture"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:imgUrl="@{model.attentionLiveData.head_image}"/>
+
+            <TextView
+                android:id="@+id/attentionTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/attention_time"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                android:text="@{model.attentionLiveData.date}"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/attentionRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
