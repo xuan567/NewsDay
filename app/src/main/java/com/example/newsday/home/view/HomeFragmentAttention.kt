@@ -56,11 +56,12 @@ class HomeFragmentAttention : Fragment() {
                 Log.d("TAG", "onCreateView: it==null")
                 return@observe
             }
+            val attentionDate = it.data
             binding.attentionTime.isVisible = true
             val layoutManager = LinearLayoutManager(context)
             binding.attentionRecycler.apply {
                 this.layoutManager = layoutManager
-                val newsList = it.news
+                val newsList = attentionDate.news
                 val adapter = AttentionNewsAdapter(newsList)
                this.adapter = adapter
             }

@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                app:imgUrl="@{model.attentionLiveData.head_image}"/>
+                app:imgUrl="@{model.attentionLiveData.data.head_image}"/>
 
             <TextView
                 android:id="@+id/attentionTime"
@@ -42,7 +42,7 @@
                 android:padding="10dp"
                 android:textSize="20sp"
                 android:visibility="invisible"
-                android:text="@{model.attentionLiveData.date}"
+                android:text="@{model.attentionLiveData.data.date}"
                 />
 
             <androidx.recyclerview.widget.RecyclerView

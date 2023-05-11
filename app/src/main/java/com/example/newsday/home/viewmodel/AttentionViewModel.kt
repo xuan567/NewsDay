@@ -1,20 +1,31 @@
 package com.example.newsday.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newsday.home.db.AttentionData
-import com.example.newsday.home.request.HomeAttentionGetRequest
+import androidx.lifecycle.viewModelScope
+import com.example.newsday.home.db.AttentionBean
+import com.example.newsday.network.ApiRetrofit
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class AttentionViewModel : ViewModel() {
 
-    private val _attentionLiveData = MutableLiveData<AttentionData>()
-    val attentionLiveData: LiveData<AttentionData> = _attentionLiveData
-    val homeAttentionGetRequest = HomeAttentionGetRequest()
+    private val _attentionLiveData = MutableLiveData<AttentionBean>()
+    val attentionLiveData: LiveData<AttentionBean> = _attentionLiveData
 
 
     fun attention(){
-        homeAttentionGetRequest.attentionRequest(_attentionLiveData)
+        viewModelScope.launch {
+            try {
+                val result = ApiRetrofit.attentionRequest().getCall("5tMzmrhXv4ogqTeA")
+                _attentionLiveData.value = result
+            } catch (e: Exception) {
+                Log.d("attention","连接失败  $e")
+            }
+        }
+
     }
 
 }
