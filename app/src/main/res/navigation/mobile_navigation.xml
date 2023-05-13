@@ -15,11 +15,24 @@
         android:id="@+id/navigation_search"
         android:name="com.example.newsday.search.SearchFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_SearchResultFragment_to_garbageResultFragment"
+            app:destination="@id/searchResultFragment"/>
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_my"
         android:name="com.example.newsday.my.MyFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_my" />
+
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.newsday.search.view.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" />
+
+
 </navigation>

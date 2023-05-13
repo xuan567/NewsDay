@@ -1,5 +1,7 @@
 package com.example.newsday
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +31,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_my
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        // setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    companion object {
+        fun startFromActivity(activity: Activity){
+            val intent = Intent(activity, MainActivity::class.java)
+            activity.startActivity(intent)
+        }
     }
 }
