@@ -33,6 +33,16 @@ object ApiRetrofit {
         return attentionRequest(baseUrl)
     }
 
+
+    /**
+     * 热榜
+     * */
+    fun hotListRequest(): ApiService {
+        val baseurl = "https://v2.alapi.cn/api/"
+        return attentionRequest(baseurl)
+    }
+
+
     /**
      * 垃圾分类
      * */
@@ -47,7 +57,7 @@ object ApiRetrofit {
             .build()
     }
 
-    fun getGarbageRequest(): ApiService{
+    fun getGarbageRequest(): ApiService {
         return Retrofit.Builder()
             .baseUrl(GARBAGE_API_BASEURL)
             .client(getOkHttpClient())

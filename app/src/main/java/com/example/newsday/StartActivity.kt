@@ -21,6 +21,9 @@ class StartActivity : BaseActivity() {
             } else {
                 LoginActivity.startFromActivity(this@StartActivity)
             }
+            delay(500)
+            //完成
+            finish()
 
         }
 

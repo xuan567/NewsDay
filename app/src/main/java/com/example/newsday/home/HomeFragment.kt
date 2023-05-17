@@ -62,7 +62,8 @@ class HomeFragment : Fragment() {
         viewpager.adapter = adapter
         viewpager.setPageTransformer(ZoomOutPageTransFormer())
         TabLayoutMediator(tablayout, viewpager, true){
-                tab, position -> tab.setText(titles[position])
+                tab, position ->
+            tab.text = titles[position]
         }.attach()
         tablayout.post(Runnable {
             IndicatorLineUtil.setIndicator(tablayout,20,20)

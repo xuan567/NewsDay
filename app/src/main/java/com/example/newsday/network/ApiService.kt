@@ -1,6 +1,7 @@
 package com.example.newsday.network
 
 import com.example.newsday.home.db.AttentionBean
+import com.example.newsday.home.db.HotListBean
 import com.example.newsday.home.db.RecommendBean
 import com.example.newsday.search.db.GarbageRecognitionBean
 import retrofit2.http.Field
@@ -15,18 +16,29 @@ interface ApiService {
      * */
     @POST("zaobao")
     @FormUrlEncoded
-    suspend fun getCall(@Field("token")token:String, @Field("format")format:String="json"): AttentionBean
+    suspend fun getCall(
+        @Field("token") token: String,
+        @Field("format") format: String = "json"
+    ): AttentionBean
 
     /**
      * 推荐
      * */
     @POST("news/get")
     @FormUrlEncoded
-    suspend  fun getCall(
+    suspend fun getCall(
         @Field("appkey") appkey: String = "07952e732c1fc364",
         @Field("channel") channel: String = "新闻",
         @Field("num") num: Int = 40
     ): RecommendBean
+
+    /**
+     * 热榜
+     * */
+    @POST("tophub/get?")
+    @FormUrlEncoded
+    suspend fun apiHotList(@Field("token") token: String, @Field("type") type: String): HotListBean
+
 
     /**
      * 垃圾分类-文字
@@ -36,8 +48,10 @@ interface ApiService {
      *
      */
     @GET("lajifenlei/index")
-    suspend fun apiTextGarbageRecognition(@Query("key")  key: String,
-                                          @Query("word") word: String): GarbageRecognitionBean
+    suspend fun apiTextGarbageRecognition(
+        @Query("key") key: String,
+        @Query("word") word: String
+    ): GarbageRecognitionBean
 
     /**
      * 垃圾分类-图片
@@ -47,8 +61,10 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("imglajifenlei/index")
-    suspend fun apiImageGarbageRecognition(@Field("key") key: String,
-                                           @Field("img") base64Img: String): GarbageRecognitionBean
+    suspend fun apiImageGarbageRecognition(
+        @Field("key") key: String,
+        @Field("img") base64Img: String
+    ): GarbageRecognitionBean
 
     /**
      * 垃圾分类-语音
@@ -63,9 +79,11 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("imglajifenlei/index")
-    suspend fun apiVoiceGarbageRecognition(@Field("key") key: String,
-                                           @Field("say") say: String,
-                                           @Field("format") format: String): GarbageRecognitionBean
+    suspend fun apiVoiceGarbageRecognition(
+        @Field("key") key: String,
+        @Field("say") say: String,
+        @Field("format") format: String
+    ): GarbageRecognitionBean
 
 
 }
