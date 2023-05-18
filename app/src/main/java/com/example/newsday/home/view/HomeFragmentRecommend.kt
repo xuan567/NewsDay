@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -44,7 +45,7 @@ class HomeFragmentRecommend : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         fragmentHomeRecommendBinding = FragmentHomeRecommendBinding.inflate(inflater, container, false)
         val recommendViewModel = ViewModelProvider(this)[RecommendViewModel::class.java]
         recommendViewModel.recommend()
@@ -61,15 +62,14 @@ class HomeFragmentRecommend : Fragment() {
 
             adapter?.setOnItemClickListener(object : RecommendAdapter.OnItemClickListener {
                 override fun onItemClick(view: View?, position: Int) {
-//                    val arr = it.list[position]
-//                    val recommendText = RecommendText().newInstance(
-//                        arr.pic,
-//                        arr.title,
-//                        arr.content,
-//                        arr.src,
-//                        arr.time
-//                    )
-//                    replaceFragment(recommendText)
+                    val detail = it.list[position]
+                    findNavController().navigate(R.id.action_navigation_home_to_recommendDetailFragment,  Bundle().apply {
+                        putString(RecommendDetailFragment.ARG_PIC,detail.pic)
+                        putString(RecommendDetailFragment.ARG_TITLE,detail.title)
+                        putString(RecommendDetailFragment.ARG_CONTENT,detail.content)
+                        putString(RecommendDetailFragment.ARG_SRC,detail.src)
+                        putString(RecommendDetailFragment.ARG_TIME,detail.time)
+                    })
                 }
 
             })
@@ -181,7 +181,13 @@ class HomeFragmentRecommend : Fragment() {
 
     }
 
-
+    private fun replaceFragment(fragment:Fragment){
+        val fragmentManager  = activity?.supportFragmentManager
+        val transaction = fragmentManager?.beginTransaction()
+        transaction?.replace(R.id.recommend_layout,fragment)
+        transaction?.addToBackStack(null)
+        transaction?.commit()
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
