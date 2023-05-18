@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.newsday.R
 import com.example.newsday.databinding.FragmentRecommendDetailBinding
@@ -42,9 +43,23 @@ class RecommendDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initListener()
+    }
+
+    private fun initListener() {
+        binding.topReturn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        binding.topUnLike.setOnClickListener {
+
+        }
+        binding.topLike.setOnClickListener {
+
+        }
     }
 
     private fun initView() {
+
         binding.pic.load(pic)
         binding.title.text = title
         content?.let {
@@ -53,6 +68,7 @@ class RecommendDetailFragment : Fragment() {
         }
 
     }
+
 
     companion object {
         const val ARG_PIC = "pic"

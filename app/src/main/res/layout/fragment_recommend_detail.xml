@@ -1,53 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        android:id="@+id/container"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/pic"
-            />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:gravity="center_horizontal"
-            android:background="@drawable/attention_time"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:id="@+id/top_return"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_return"/>
+            <TextView
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新闻详情"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/top_return"
+                />
+            <TextView
+                android:id="@+id/top_unLike"
+                android:layout_marginEnd="20dp"
+                android:layout_centerVertical="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_unlike"/>
+            <TextView
+                android:id="@+id/top_like"
+                android:layout_marginEnd="20dp"
+                android:layout_centerVertical="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:background="@drawable/ic_like"/>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        >
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:background="@color/white"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <WebView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="15dp"
-            android:background="@drawable/view_shape"
-            android:textSize="17sp"
-            android:id="@+id/content"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:scaleType="centerCrop"
+                android:id="@+id/pic"
+                />
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/src"-->
-<!--            android:textSize="15sp"/>-->
+            <TextView
+                android:id="@+id/title"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:gravity="center_horizontal"
+                android:background="@drawable/attention_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="15sp"-->
-<!--            android:id="@+id/time" />-->
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="15dp"
+                android:background="@drawable/view_shape"
+                android:textSize="17sp"
+                android:id="@+id/content"/>
+
+            <!--        <TextView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:id="@+id/src"-->
+            <!--            android:textSize="15sp"/>-->
+
+            <!--        <TextView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:textSize="15sp"-->
+            <!--            android:id="@+id/time" />-->
 
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
