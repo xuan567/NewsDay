@@ -55,7 +55,7 @@ class HomeFragmentRecommend : Fragment() {
             }
             val layoutManager = LinearLayoutManager(context)
             val adapter = context?.let {
-                    it1 -> RecommendAdapter(it1, it.list)
+                    it1 -> RecommendAdapter(it1, it.list.toMutableList())
             }
             fragmentHomeRecommendBinding.recommendRecycler.layoutManager = layoutManager
             fragmentHomeRecommendBinding.recommendRecycler.adapter = adapter
@@ -79,7 +79,7 @@ class HomeFragmentRecommend : Fragment() {
 
     }
 
-    class RecommendAdapter(val context: Context, var recommendList: List<ListItem>) :
+    class RecommendAdapter(val context: Context, var recommendList: MutableList<ListItem>) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         private val TYPE_ITEM_ONE = 1

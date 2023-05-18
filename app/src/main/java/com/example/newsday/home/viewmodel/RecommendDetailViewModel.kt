@@ -8,11 +8,11 @@ import com.example.newsday.persistence.bean.CommendDetailDate
 import com.example.newsday.persistence.dateBaseHelper.CommendDetailDateBaseHelper
 import kotlinx.coroutines.launch
 
-class RecommendDetailViewModel: ViewModel() {
+open class RecommendDetailViewModel: ViewModel() {
     var isLikeLiveDate: MutableLiveData<CommendDetailDate> = MutableLiveData()
 
 
-    private var commendDetailDateBaseHelper: CommendDetailDateBaseHelper? = null
+    var commendDetailDateBaseHelper: CommendDetailDateBaseHelper? = null
     fun initCommendDetailDateBaseHelper(context: Context) {
         commendDetailDateBaseHelper =  CommendDetailDateBaseHelper.instance(context)
     }

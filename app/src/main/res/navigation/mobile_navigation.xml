@@ -30,7 +30,11 @@
         android:id="@+id/navigation_my"
         android:name="com.example.newsday.my.MyFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_my" />
+        tools:layout="@layout/fragment_my" >
+        <action
+            android:id="@+id/action_navigation_my_to_recommendDetailFragment"
+            app:destination="@id/recommendDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchResultFragment"

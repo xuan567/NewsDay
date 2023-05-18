@@ -1,6 +1,7 @@
 package com.example.newsday.util
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 import java.net.URLEncoder
@@ -24,6 +25,11 @@ object ImageUtil {
         }
         val bytes: ByteArray = baos.toByteArray()
         return Base64.encodeToString(bytes, Base64.DEFAULT)
+    }
+
+    fun base64Decode(photoString : String) : Bitmap{
+        val input = Base64.decode(photoString, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(input,0,input.size)
     }
 
     private fun encodeUTF8(date: String): String {
