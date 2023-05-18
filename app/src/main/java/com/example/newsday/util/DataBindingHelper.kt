@@ -4,7 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
-@BindingAdapter("app:imgUrl")
+@BindingAdapter("imgUrl")
 fun loadImage(imageView: ImageView?, imgUrl: String?){
     if(imageView == null) {
         return

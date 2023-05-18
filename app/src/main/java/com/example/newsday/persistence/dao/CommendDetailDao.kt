@@ -10,17 +10,19 @@ import com.example.newsday.persistence.bean.CommendDetailDate
 interface CommendDetailDao {
 
     @Insert
-    fun insert(vararg detailDate: CommendDetailDate)
+    suspend fun insert(vararg detailDate: CommendDetailDate)
 
     @Delete
-    fun delete(detailDate: CommendDetailDate)
+    suspend fun delete(detailDate: CommendDetailDate)
 
+    @Query("DELETE FROM detail WHERE title = :title")
+    suspend fun deleteByTitle(title: String)
 
     @Query("SELECT * FROM detail")
-    fun getAll(): List<CommendDetailDate>
+    suspend fun getAll(): List<CommendDetailDate>
 
 
-    @Query("SELECT * FROM detail WHERE id = :key")
-    fun findByKey(key: String): CommendDetailDate
+    @Query("SELECT * FROM detail WHERE title = :title")
+    suspend fun findByTitle(title: String): CommendDetailDate
 
 }

@@ -1,15 +1,40 @@
 package com.example.newsday.home.viewmodel
 
-import androidx.lifecycle.LiveData
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newsday.home.db.HotData
+import androidx.lifecycle.viewModelScope
+import com.example.newsday.persistence.bean.CommendDetailDate
+import com.example.newsday.persistence.dateBaseHelper.CommendDetailDateBaseHelper
+import kotlinx.coroutines.launch
 
 class RecommendDetailViewModel: ViewModel() {
-    private var _isLikeLiveDate: MutableLiveData<HotData> = MutableLiveData()
-    val isLikeLiveDate: LiveData<HotData> = _isLikeLiveDate
+    var isLikeLiveDate: MutableLiveData<CommendDetailDate> = MutableLiveData()
 
-    fun getDetailIsLiked(key: String) {
+
+    private var commendDetailDateBaseHelper: CommendDetailDateBaseHelper? = null
+    fun initCommendDetailDateBaseHelper(context: Context) {
+        commendDetailDateBaseHelper =  CommendDetailDateBaseHelper.instance(context)
+    }
+
+
+    fun getDetailIsLiked(title: String) {
+        viewModelScope.launch {
+            isLikeLiveDate.value = commendDetailDateBaseHelper?.isLikedByTitle(title)
+        }
+    }
+
+    fun insertLike(date: CommendDetailDate) {
+        viewModelScope.launch {
+            commendDetailDateBaseHelper?.insertLike(date)
+        }
 
     }
+
+    fun deleteLike(title: String) {
+        viewModelScope.launch {
+            commendDetailDateBaseHelper?.deleteLike(title)
+        }
+    }
+
 }

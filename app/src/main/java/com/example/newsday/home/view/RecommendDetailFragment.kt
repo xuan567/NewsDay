@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.newsday.R
 import com.example.newsday.databinding.FragmentRecommendDetailBinding
 import com.example.newsday.home.db.ListItem
+import com.example.newsday.home.viewmodel.AttentionViewModel
+import com.example.newsday.home.viewmodel.RecommendDetailViewModel
+import com.example.newsday.persistence.bean.CommendDetailDate
 import com.example.newsday.util.HtmlUtil
 class RecommendDetailFragment : Fragment() {
     private var pic: String? = null
@@ -20,6 +24,8 @@ class RecommendDetailFragment : Fragment() {
 
 
     private lateinit var binding: FragmentRecommendDetailBinding
+
+    private lateinit var viewModel: RecommendDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +50,22 @@ class RecommendDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initListener()
+        initDate()
+    }
+
+    private fun getMyCommendDetailDate(): CommendDetailDate {
+        return CommendDetailDate(title = title, pic = pic, content = content, src = src, time = time)
+    }
+
+    private fun initDate() {
+        viewModel = ViewModelProvider(this)[RecommendDetailViewModel::class.java]
+        viewModel.initCommendDetailDateBaseHelper(requireContext())
+        viewModel.getDetailIsLiked(title ?: "")
+
+
+        viewModel.isLikeLiveDate.observe(viewLifecycleOwner) {
+            setIsLiked(it != null && !it.title.isNullOrEmpty())
+        }
     }
 
     private fun initListener() {
@@ -51,10 +73,22 @@ class RecommendDetailFragment : Fragment() {
             findNavController().popBackStack()
         }
         binding.topUnLike.setOnClickListener {
-
+            viewModel.insertLike(getMyCommendDetailDate())
+            setIsLiked(true)
         }
         binding.topLike.setOnClickListener {
+            viewModel.deleteLike(title ?: "")
+            setIsLiked(false)
+        }
+    }
 
+    private fun setIsLiked(isLike: Boolean) {
+        if(isLike) {
+            binding.topUnLike.visibility = View.GONE
+            binding.topLike.visibility = View.VISIBLE
+        } else {
+            binding.topUnLike.visibility = View.VISIBLE
+            binding.topLike.visibility = View.GONE
         }
     }
 
