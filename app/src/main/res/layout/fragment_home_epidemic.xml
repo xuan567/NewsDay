@@ -12,9 +12,54 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="131dp"
+            android:layout_height="140dp"
             android:src="@drawable/yiqing" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue2"
+            android:layout_marginTop="-15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/internalText"
+                android:text="全国疫情"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/abroadText"
+                android:text="世界疫情"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
+        <ImageView
+            android:id="@+id/internalImg"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/internal" />
+
+        <ImageView
+            android:id="@+id/abroadImg"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:src="@drawable/abroad" />
+        <ImageView
+            android:id="@+id/hesuanImg"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/hesuan"
+            android:visibility="visible"/>
+        <FrameLayout
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/chartContainer"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"/>
     </LinearLayout>
+
 
 </androidx.core.widget.NestedScrollView>

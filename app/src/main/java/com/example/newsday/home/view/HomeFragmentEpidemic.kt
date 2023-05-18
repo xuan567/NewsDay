@@ -1,13 +1,23 @@
 package com.example.newsday.home.view
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.example.newsday.R
+import com.example.newsday.databinding.FragmentHomeEpidemicBinding
+import com.github.testpress.mikephil.charting.charts.PieChart
+import com.github.testpress.mikephil.charting.data.PieData
+import com.github.testpress.mikephil.charting.data.PieDataSet
+import com.github.testpress.mikephil.charting.data.PieEntry
+import com.github.testpress.mikephil.charting.formatter.PercentFormatter
+import com.github.testpress.mikephil.charting.utils.ColorTemplate
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -21,6 +31,8 @@ class HomeFragmentEpidemic : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var pieChart: PieChart? = null
+    private lateinit var binding: FragmentHomeEpidemicBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +46,67 @@ class HomeFragmentEpidemic : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_epidemic, container, false)
+        binding = FragmentHomeEpidemicBinding.inflate(inflater, container, false)
+        binding.internalText.setTextColor(Color.WHITE)
+        binding.abroadText.setTextColor(Color.DKGRAY)
+        initCharView()
+        initCharData()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.hesuanImg.setOnClickListener {
+
+        }
+        binding.internalText.setOnClickListener {
+            binding.internalText.setTextColor(Color.WHITE)
+            binding.abroadText.setTextColor(Color.DKGRAY)
+            binding.internalImg.isVisible = true
+            binding.abroadImg.isVisible = false
+        }
+        binding.abroadText.setOnClickListener {
+            binding.internalText.setTextColor(Color.DKGRAY)
+            binding.abroadText.setTextColor(Color.WHITE)
+            binding.internalImg.isVisible = false
+            binding.abroadImg.isVisible = true
+        }
+    }
+
+    private fun initCharView() {
+        pieChart = PieChart(context)
+        pieChart?.apply {
+            val lp = FrameLayout.LayoutParams(850, 850)
+            layoutParams = lp
+        }
+        binding.chartContainer.addView(pieChart)
+    }
+
+    private fun initCharData() {
+        val values = arrayListOf<PieEntry>()
+        values.add(PieEntry(40f, "累计治愈"))
+        values.add(PieEntry(10f, "累计死亡"))
+        values.add(PieEntry(40f, "累计确诊"))
+        values.add(PieEntry(10f, "现存确诊"))
+
+        //数据和颜色
+        val dataColors = arrayListOf<Int>()
+        for (c in ColorTemplate.VORDIPLOM_COLORS) dataColors.add(c)
+        for (c in ColorTemplate.JOYFUL_COLORS) dataColors.add(c)
+        for (c in ColorTemplate.COLORFUL_COLORS) dataColors.add(c)
+        for (c in ColorTemplate.LIBERTY_COLORS) dataColors.add(c)
+        for (c in ColorTemplate.PASTEL_COLORS) dataColors.add(c)
+        dataColors.add(ColorTemplate.getHoloBlue())
+        val mPieDataSet = PieDataSet(values, "Label")
+        mPieDataSet.apply {
+            valueFormatter = PercentFormatter()
+            colors = dataColors
+            valueTextColor = Color.DKGRAY// 设置百分比字体颜色
+            valueTextSize = 15f // 设置百分比字体大小
+        }
+        val mPieData = PieData(mPieDataSet)
+        pieChart?.setEntryLabelColor(Color.DKGRAY) // 设置图表扇形文字颜色
+        pieChart?.data = mPieData
     }
 
     companion object {

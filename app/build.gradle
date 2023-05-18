@@ -72,6 +72,9 @@ dependencies {
     implementation "androidx.room:room-runtime:2.5.0"
     annotationProcessor "androidx.room:room-compiler:2.5.0"
 
+    // 饼状图
+    implementation 'com.github.testpress:MPAndroidChart:v3.0.0-beta2'
+
     // To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:2.5.0"
 }
