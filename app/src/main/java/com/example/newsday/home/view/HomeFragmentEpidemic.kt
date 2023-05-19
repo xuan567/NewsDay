@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.newsday.R
 import com.example.newsday.databinding.FragmentHomeEpidemicBinding
 import com.github.testpress.mikephil.charting.charts.PieChart
@@ -57,8 +58,9 @@ class HomeFragmentEpidemic : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.hesuanImg.setOnClickListener {
-
+            findNavController().navigate(R.id.action_navigation_home_to_mapsFragment)
         }
+
         binding.internalText.setOnClickListener {
             binding.internalText.setTextColor(Color.WHITE)
             binding.abroadText.setTextColor(Color.DKGRAY)

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_recommendDetailFragment"
             app:destination="@id/recommendDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
 
     <fragment
@@ -45,6 +48,11 @@
         android:id="@+id/recommendDetailFragment"
         android:name="com.example.newsday.home.view.RecommendDetailFragment"
         android:label="RecommendDetailFragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.newsday.home.view.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 
 
 </navigation>

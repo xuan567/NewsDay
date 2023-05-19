@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.searchResultFragment, R.id.recommendDetailFragment ->
+                R.id.searchResultFragment, R.id.recommendDetailFragment, R.id.mapsFragment ->
                 {
                     navView.visibility = View.GONE
                 }
