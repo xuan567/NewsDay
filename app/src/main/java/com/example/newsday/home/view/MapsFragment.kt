@@ -62,7 +62,8 @@ class MapsFragment : Fragment() {
     private lateinit var aMap: AMap
     private var mLastLocation: Location? = null
     private var mLocationLatLng: LatLng? = null
-    private var nearestMark: MapMarkDate? = null
+
+    private var markList: List<MapMarkDate> = emptyList()
 
 
     override fun onCreateView(
@@ -95,6 +96,19 @@ class MapsFragment : Fragment() {
             findNavController().popBackStack()
         }
         topPositionView.setOnClickListener {
+            var nearestMark: MapMarkDate? = null
+            var nearestDistance: Float = Float.MAX_VALUE
+            markList.forEach { markDate ->
+                val distance = AMapUtils.calculateLineDistance(mLocationLatLng, LatLng(markDate.lat, markDate.lng))
+                if(distance < nearestDistance) {
+                    nearestDistance = distance
+                    nearestMark =  markDate
+                }
+            }
+            if(nearestMark == null) {
+                Toast.makeText(requireContext(), "定位失败", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             Toast.makeText(requireContext(), "已为您导航至最近的核算点！您还可以在地图上查看更多核算点", Toast.LENGTH_LONG).show()
             nearestMark?.let {
                 initRouteSearch(it)
@@ -202,14 +216,8 @@ class MapsFragment : Fragment() {
 
         viewModel.markLiveData.observe(viewLifecycleOwner) {
             it?: return@observe
-            var nearestDistance: Float = Float.MAX_VALUE
+            markList = it
             it.forEach { markDate ->
-                val distance = AMapUtils.calculateLineDistance(mLocationLatLng, LatLng(markDate.lat, markDate.lng))
-                if(AMapUtils.calculateLineDistance(mLocationLatLng, LatLng(markDate.lat, markDate.lng))
-                    < nearestDistance) {
-                    nearestDistance = distance
-                    nearestMark =  markDate
-                }
                 addMarker(markDate)
             }
         }

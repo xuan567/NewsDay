@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                tools:text="添加核酸点"
+                android:text="添加核酸点"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
