@@ -1,7 +1,6 @@
 package com.example.newsday.home.view
 
 import android.Manifest
-import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +17,6 @@ import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapUtils
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
-import com.amap.api.maps.MapsInitializer
-import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.maps.model.MyLocationStyle
@@ -39,7 +36,6 @@ import com.amap.api.services.route.RouteSearch.OnRouteSearchListener
 import com.amap.api.services.route.RouteSearch.WalkRouteQuery
 import com.amap.api.services.route.WalkPath
 import com.amap.api.services.route.WalkRouteResult
-import com.example.newsday.R
 import com.example.newsday.databinding.FragmentMapsBinding
 import com.example.newsday.home.db.MapMarkDate
 import com.example.newsday.home.viewmodel.MapsViewModel
@@ -65,6 +61,10 @@ class MapsFragment : Fragment() {
 
     private var markList: List<MapMarkDate> = emptyList()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        needPermission()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,14 +79,14 @@ class MapsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView = binding.map
-        mapView.onCreate(savedInstanceState)
-        //显示地图
-        aMap = mapView.map
-
         topReturnView = binding.topReturn
         topAddView = binding.topAddMark
         topPositionView = binding.topPosition
 
+        mapView.onCreate(savedInstanceState)
+        //显示地图
+        aMap = mapView.map
+        initLocation()
         initDate()
         initListener()
     }
@@ -159,14 +159,14 @@ class MapsFragment : Fragment() {
                     viewModel.addMark(mapMarkDate)
                     Toast.makeText(requireContext(), "添加成功，等待管理员审核", Toast.LENGTH_LONG).show()
                 }
-                defaultLocationSitting()
+                initLocation()
                 binding.addMarResult.visibility = View.GONE
             }
             binding.addMarResultQuit.setOnClickListener {
                 binding.addMarResult.visibility = View.GONE
                 aMap.clear()
                 viewModel.getAllMark()
-                defaultLocationSitting()
+                initLocation()
             }
         }
 
@@ -208,7 +208,6 @@ class MapsFragment : Fragment() {
     }
 
     private fun initDate() {
-        needPermission()
 
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
         viewModel.initCommendDetailDateBaseHelper(requireContext())
@@ -237,8 +236,6 @@ class MapsFragment : Fragment() {
                     Toast.makeText(requireContext(), "位置信息获取失败，请打开相关权限", Toast.LENGTH_LONG)
                         .show()
                     findNavController().popBackStack()
-                } else {
-                    initLocation()
                 }
             }
         permissionLauncher.launch(
@@ -250,13 +247,6 @@ class MapsFragment : Fragment() {
     }
 
     private fun initLocation() {
-        // 隐私合规
-        MapsInitializer.updatePrivacyShow(activity, true, true)
-        MapsInitializer.updatePrivacyAgree(activity, true)
-        defaultLocationSitting()
-    }
-
-    private fun defaultLocationSitting() {
         //定位设置
         val locationStyle = MyLocationStyle().apply {
             myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
@@ -271,6 +261,7 @@ class MapsFragment : Fragment() {
             isMyLocationEnabled = true                  // 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
         }
     }
+
 
     private fun addMarker(mapMarkDate: MapMarkDate) {
         val markerOption = MarkerOptions()

@@ -1,15 +1,22 @@
 package com.example.newsday.home.view
 
+import android.Manifest
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.amap.api.maps.MapsInitializer
 import com.example.newsday.R
 import com.example.newsday.databinding.FragmentHomeEpidemicBinding
 import com.github.testpress.mikephil.charting.charts.PieChart
@@ -46,7 +53,7 @@ class HomeFragmentEpidemic : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeEpidemicBinding.inflate(inflater, container, false)
         binding.internalText.setTextColor(Color.WHITE)
         binding.abroadText.setTextColor(Color.DKGRAY)
@@ -58,6 +65,8 @@ class HomeFragmentEpidemic : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.hesuanImg.setOnClickListener {
+            MapsInitializer.updatePrivacyShow(activity, true, true)
+            MapsInitializer.updatePrivacyAgree(activity, true)
             findNavController().navigate(R.id.action_navigation_home_to_mapsFragment)
         }
 
