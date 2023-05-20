@@ -15,12 +15,21 @@ dependencyResolutionManagement {
     repositories {
 //        google()
 //        mavenCentral()
+
+        /**
+         * 注意： 顺序改变可能会影响到项目
+         * 当您的依赖项不是本地库或文件树时，Gradle 会在 settings.gradle 文件的 dependencyResolutionManagement { repositories {...} }
+         * 代码块中指定的所有在线仓库中查找相关文件。 各个仓库的列出顺序决定了 Gradle 在这些仓库中搜索各个项目依赖项的顺序。
+         * 例如，如果从仓库 A 和 B 均可获得某个依赖项，而您先列出了仓库 A，则 Gradle 会从仓库 A 下载该依赖项。
+         *
+         * dependencies和dependencyManagement以及plugins和pluginManagement的区别 :https://blog.csdn.net/sayoko06/article/details/107688645
+         */
         maven {url 'https://dl.bintray.com/jetbrains/anko'} //这是你需要加入的，这个是解决这个问题的关键地方，我就是添加这个maven后不再报上面的错误了
 
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' } //gradle-plugin
-        maven { url 'https://maven.aliyun.com/repository/google' } //google
-        maven { url 'https://maven.aliyun.com/repository/public' } //public
-        maven { url 'https://maven.aliyun.com/repository/jcenter'} //jcenter
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
     }
 }
 rootProject.name = "NewsDay"
