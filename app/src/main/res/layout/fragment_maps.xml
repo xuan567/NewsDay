@@ -25,7 +25,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="查看核算点"
+                android:text="查看核酸点"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -157,7 +157,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="请正确填写核算点信息，然后点击确认按钮，我们会在确认后尽快更新核算点。"
+                android:text="请正确填写核酸点信息，然后点击确认按钮，我们会在确认后尽快更新核酸点。"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 />

@@ -109,7 +109,7 @@ class MapsFragment : Fragment() {
                 Toast.makeText(requireContext(), "定位失败", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            Toast.makeText(requireContext(), "已为您导航至最近的核算点！您还可以在地图上查看更多核算点", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "已为您导航至最近的核酸点！您还可以在地图上查看更多核酸点", Toast.LENGTH_LONG).show()
             nearestMark?.let {
                 initRouteSearch(it)
             }
@@ -150,7 +150,7 @@ class MapsFragment : Fragment() {
             binding.addMarResultSure.setOnClickListener {
                 val name = binding.addMarResultEdit.text.trim().toString()
                 if(name.isBlank()) {
-                    Toast.makeText(requireContext(), "核算点名称不能为空", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "核酸点名称不能为空", Toast.LENGTH_LONG).show()
                 } else if (binding.addMarResultAddress.text.toString().isBlank()) {
                     Toast.makeText(requireContext(), "获取位置信息失败", Toast.LENGTH_LONG).show()
                 } else {
@@ -222,7 +222,7 @@ class MapsFragment : Fragment() {
         }
         viewModel.addMarkLiveData.observe(viewLifecycleOwner) {
             it?: return@observe
-            Toast.makeText(requireContext(),"你添加的核算点信息审核通过了，快去看看把！", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(),"你添加的核酸点信息审核通过了，快去看看把！", Toast.LENGTH_LONG).show()
             aMap.clear()
             viewModel.getAllMark()
         }
