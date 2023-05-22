@@ -54,7 +54,7 @@ class TouTiaoFragment : Fragment() {
             }
 
             val layoutManager = LinearLayoutManager(context)
-            val adapter = TouTiaoAdapter(it.list)
+            val adapter = TouTiaoAdapter(it)
             binding.toutiaoRecycler.layoutManager = layoutManager
             binding.toutiaoRecycler.adapter = adapter
             binding.toutiaoRecycler.setItemViewCacheSize(50)
@@ -62,7 +62,7 @@ class TouTiaoFragment : Fragment() {
             adapter.setOnItemClickListener(object : TouTiaoAdapter.OnItemClickListener {
                 override fun onItemClick(view: View?, position: Int) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    val string = it.list.get(position).link
+                    val string = it[position].link
                     intent.data = Uri.parse(string)
                     startActivity(intent)
                 }

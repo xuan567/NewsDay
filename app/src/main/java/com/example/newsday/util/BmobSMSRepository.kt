@@ -17,8 +17,7 @@ import com.example.newsday.login.SpHelp
  * 在发送短信验证码成功后开启倒计时功能
  */
 fun bMobSMS(phoneNumber : String, loginGetAutoCode : MutableLiveData<LoginAutoCode>,
-            loginCountNumber : MutableLiveData<CountChange?>
-) {
+            loginCountNumber : MutableLiveData<CountChange?>) {
 
     BmobSMS.requestSMSCode(phoneNumber, "", object : QueryListener<Int>() {
         override fun done(smsId : Int?, e: BmobException?) {

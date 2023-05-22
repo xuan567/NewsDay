@@ -20,31 +20,32 @@ import com.example.newsday.R
 import com.example.newsday.databinding.ActivityLoginBinding
 
 class LoginActivity : BaseActivity() {
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding : ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var phone: EditText
-    private lateinit var code: EditText
-    private lateinit var login: Button
-    private lateinit var loading: ProgressBar
-    private lateinit var authCode: TextView
+
+    private lateinit var phone : EditText
+    private lateinit var code : EditText
+    private lateinit var login : Button
+    private lateinit var loading : ProgressBar
+    private lateinit var authCode : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
         initData()
     }
-
     private fun initView() {
         //获取ViewBinding
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.debugButton.setOnClickListener {
             MainActivity.startFromActivity(this)
             finish()
         }
     }
-
     private fun initData() {
+
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         phone = binding.username
         code = binding.password
@@ -55,36 +56,6 @@ class LoginActivity : BaseActivity() {
         initInputData()
         initAuthCodeData()
         initVerifyData()
-
-    }
-
-    private fun initInputData() {
-        phone.doAfterTextChanged {
-            loginViewModel.loginDataChanged(
-                phone.text.toString().trim(),
-                code.text.toString().trim()
-            )
-        }
-        code.doAfterTextChanged {
-            loginViewModel.loginDataChanged(
-                phone.text.toString().trim(),
-                code.text.toString().trim()
-            )
-        }
-        loginViewModel.loginFromState.observe(this, Observer {
-            val loginState = it ?: return@Observer
-            //根据登录状态 设置 login按钮是否可以点击
-            if (loginState.usernameError != null) {
-                phone.error = getString(loginState.usernameError)
-            } else {
-                //可以发验证码了
-                if(NOTFWTHEAUTOCODE){
-                    authCode.isEnabled = loginState.isUserNameValid
-                    authCode.setBackgroundResource(R.color.authCode)
-                }
-                INPUTRIGHT = loginState.isUserNameValid && loginState.isPasswordValid
-            }
-        })
     }
 
     private fun initAuthCodeData() {
@@ -95,7 +66,7 @@ class LoginActivity : BaseActivity() {
         loginViewModel.loginGetAutoCode.observe(this, Observer {
             val loginAutoCode = it ?: return@Observer
             if( loginAutoCode.error != null ){
-                Toast.makeText(this,"发送失败", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"发送失败",Toast.LENGTH_LONG).show()
             }else{
                 login.isEnabled = true
             }
@@ -110,7 +81,40 @@ class LoginActivity : BaseActivity() {
         })
     }
 
+    private fun initInputData() {
+        //输入发生改变后，调用ViewModel中的方法区判断输入是否有异常
+        phone.doAfterTextChanged {
+            loginViewModel.loginDataChanged(
+                phone.text.toString().trim(),
+                code.text.toString().trim()
+            )
+        }
+        code.doAfterTextChanged {
+            loginViewModel.loginDataChanged(
+                phone.text.toString().trim(),
+                code.text.toString().trim()
+            )
+        }
+        loginViewModel.loginFormState.observe(this, Observer {
+            val loginState = it ?:  return@Observer
+            //根据登录状态 设置 login按钮是否可以点击
+            //login.isEnabled = loginState.isDataValid
+            if (loginState.usernameError != null) {
+                phone.error = getString(loginState.usernameError)
+            }
+            else {
+                //可以发验证码了
+                if(NOTFWTHEAUTOCODE){
+                    authCode.isEnabled = loginState.isUserNameValid
+                    authCode.setBackgroundResource(R.color.authCode)
+                }
+                INPUTRIGHT = loginState.isUserNameValid && loginState.isPasswordValid
+            }
+        })
+    }
+
     private fun initVerifyData() {
+
         login.setOnClickListener{
             if(!INPUTRIGHT){
                 showErrorToast(this,getString(R.string.inputError))
@@ -133,7 +137,6 @@ class LoginActivity : BaseActivity() {
             }
         })
     }
-
     companion object {
         fun startFromActivity(activity: Activity) {
             val intent = Intent(activity, LoginActivity::class.java)

@@ -48,20 +48,21 @@ class ZhiHuFragment : Fragment() {
         binding = FragmentZhiHuBinding.inflate(inflater, container, false)
         val hotListViewModel = ViewModelProvider(this)[HotListViewModel::class.java]
         hotListViewModel.getHotList("zhihu")
+        hotListViewModel.initCommendDetailDateBaseHelper(requireContext())
         hotListViewModel.hotListLiveData.observe(requireActivity()){
             if (it == null) {
                 Log.d("Hot", "zhihu: it==null")
                 return@observe
             }
             val layoutManager = LinearLayoutManager(context)
-            val adapter = ZhiHuAdapter(it.list)
+            val adapter = ZhiHuAdapter(it)
             binding.zhihuRecycler.layoutManager = layoutManager
             binding.zhihuRecycler.adapter = adapter
             binding.zhihuRecycler.setItemViewCacheSize(50)
             adapter.setOnItemClickListener(object : ZhiHuAdapter.OnItemClickListener {
                 override fun onItemClick(view: View?, position: Int) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    val string = it.list[position].link
+                    val string = it[position].link
                     intent.data = Uri.parse(string)
                     startActivity(intent)
                 }

@@ -1,5 +1,8 @@
 package com.example.newsday.home.db
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class HotListBean(
     val code: Int,
     val `data`: HotData,
@@ -14,7 +17,10 @@ data class HotData(
     val name: String
 )
 
+
+@Entity(tableName = "hot")
 data class HotItem(
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     val link: String,
     val other: String,
     val title: String

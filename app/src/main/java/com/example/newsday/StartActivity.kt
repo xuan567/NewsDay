@@ -14,7 +14,6 @@ class StartActivity : BaseActivity() {
         setContentView(R.layout.activity_start)
 
         lifecycleScope.launch {
-
             delay(500)
             if (SpHelp.queryIsLoggedIn()) {
                 MainActivity.startFromActivity(this@StartActivity)
@@ -24,7 +23,6 @@ class StartActivity : BaseActivity() {
             delay(500)
             //完成
             finish()
-
         }
 
     }

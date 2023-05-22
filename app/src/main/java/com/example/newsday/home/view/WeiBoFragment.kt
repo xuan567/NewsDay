@@ -38,7 +38,7 @@ class WeiBoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentWeiBoBinding.inflate(inflater,container,false)
         val hotListViewModel = ViewModelProvider(this)[HotListViewModel::class.java]
         hotListViewModel.getHotList("weibo")
@@ -49,14 +49,14 @@ class WeiBoFragment : Fragment() {
             }
             val layoutManager = LinearLayoutManager(context)
 
-            val adapter = WeiBoAdapter(it.list)
+            val adapter = WeiBoAdapter(it)
             binding.weiboRecycler.layoutManager = layoutManager
             binding.weiboRecycler.adapter = adapter
             binding.weiboRecycler.setItemViewCacheSize(50)
             adapter.setOnItemClickListener(object : WeiBoAdapter.OnItemClickListener {
                 override fun onItemClick(view: View?, position: Int) {
                     val intent = Intent(Intent.ACTION_VIEW)
-                    val string = it.list[position].link
+                    val string = it[position].link
                     intent.data = Uri.parse(string)
                     startActivity(intent)
                 }
